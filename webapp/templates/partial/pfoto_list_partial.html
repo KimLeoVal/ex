@@ -1,48 +1,36 @@
-{% extends "base.html" %}
-{% block nav %}
-    {% if request.user.is_authenticated %}
-        {% if perms.webapp.change_photo or user == photo.author %}
-            <li class="nav-item">
-                <a class="nav-link" href="{% url "webapp:UpdatePhoto" photo.pk %}">Редактировать</a>
-            </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{% url "webapp:DeletePhoto" photo.pk %}">Удалить</a>
-        </li>
-            {% endif %}
-
-    {% endif %}
-{% endblock %}
-
-{% block content %}
-    <div class="card mt-3">
-        <div class="card-body text-center">
-            <img src="{{ photo.img.url }}" style="height: auto; width: auto">
-            <h5 class="card-title">{{ photo.upper }}</h5>
+<h1 class="text-center">Фото</h1>
+<div class="row">
+    {% for photo in photos %}
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card mb-3">
+                <img src="{{ photo.img.url }}" style="height: 300px;width: auto" >
+                <h5 class="card-title">{{ photo.upper }}</h5>
             <h6 class="card-subtitle mb-2 text-muted">Автор: {{ photo.author }}</h6>
             <p class="card-text">Подпись: {{ photo.caption }}</p>
-        </div>
-       <div id="container" style="display: flex;">
+                <p class="card-text">Дата: {{ photo.created_at }}</p>
+                {% if photo.album  %}
+                    <p class="card-text">Альбомы: </p>
+                    {% for album in  photo.album.all %}
+                        <a class="nav-link" href="{% url "webapp:AlbumView" album.pk %}">{{ album.name }}</a>
+                    {% endfor %}
+                {% endif %}
+            <li class="nav-item">
+            <a class="nav-link" href="{% url 'webapp:PhotoView' photo.pk %}">Смотреть</a>
+        </li>
 
-
-{% if request.user in photo.favorites.all %}
-                <button id="like{{ forloop.counter }}" class="btn_like" data-pk="{{ photo.id }}"
-                        style="width: 100px; height: 75px; ">Из избранного
-                </button>
-
-{% endif %}
-       {% if request.user not in photo.favorites.all %}
                 <button id="like{{ forloop.counter }}" class="btn_like" data-pk="{{ photo.id }}"
                         style="width: 100px; height: 75px; ">В избранное
                 </button>
-       {% endif %}
-
-
-
+{#       {% endif %}#}
+            </div>
         </div>
-    </div>
+        {% empty %}
+    {% endfor %}
+    {% if is_paginated %}
+        <div class="text-center">{% include "partial/pagination.html" %}</div>
+    {% endif %}
 
-
-
+</div>
 <script>
 
         async function changeButton(id, event) {
@@ -56,7 +44,9 @@
             let user = data['user']
             console.log(user)
 
-            let button = await document.getElementById('like')
+            {#let button = await document.getElementById(`like${id}`)#}
+            let button = await event.target
+            console.log(button)
 
 
             if (button.innerText === 'В избранное') {
@@ -75,4 +65,4 @@
     </script>
 
 
-{% endblock %}
+

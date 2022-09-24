@@ -7,6 +7,7 @@
 #
 # # Create your views here.
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.utils.http import urlencode
@@ -85,30 +86,18 @@ class DeletePhoto(PermissionRequiredMixin, DeleteView):
     def has_permission(self):
         return super().has_permission() or self.request.user == self.get_object().author
 
-class AddFavoritePhoto(View):
 
+class AddFavPhoto(View):
     def get(self, request, *args, **kwargs):
-        photo = get_object_or_404(Photo, pk=self.kwargs.get('pk'))
-        user=self.request.user
-        photo.favorites.add(user)
-        photo.save()
-        return redirect('webapp:index')
+        pk=kwargs.get('pk')
+        photo=get_object_or_404(Photo,pk=pk)
+        user = self.request.user
+        if photo.favorites.filter(id=user.pk):
+            photo.favorites.remove(user.pk)
+        else:
+            photo.favorites.add(user.pk)
+
+        param={'user':user.pk, 'pk': photo.pk}
 
 
-
-
-#
-# class CreateLike(View):
-#     def get(self, request, *args, **kwargs):
-#         pk=kwargs.get('pk')
-#         article=get_object_or_404(Article,pk=pk)
-#         user = self.request.user
-#         if article.user.filter(id=user.pk):
-#             article.user.remove(user)
-#         else:
-#             article.user.add(user)
-#         likes=len(article.user.all())
-#         param={'likes':likes, 'pk': article.pk}
-#
-#
-#         return JsonResponse(param)
+        return JsonResponse(param)

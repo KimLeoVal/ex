@@ -24,7 +24,7 @@ class AlbumView(DetailView):
     model = Album
 
 
-class CreateAlbum(PermissionRequiredMixin, CreateView):
+class CreateAlbum(LoginRequiredMixin, CreateView):
     form_class = AlbumForm
     template_name = "albums/create.html"
 
@@ -66,29 +66,18 @@ class DeleteAlbum(PermissionRequiredMixin,DeleteView):
     def has_permission(self):
         return super().has_permission() or self.request.user == self.get_object().author
 
-class AddFavoriteAlbum(View):
 
+class AddFavAlbum(View):
     def get(self, request, *args, **kwargs):
-        album = get_object_or_404(Album, pk=self.kwargs.get('pk'))
-        user=self.request.user
-        album.favorites.add(user)
-        album.save()
-        return redirect('webapp:index')
-#
-# class CreateLikeComment(View):
-#     def get(self, request, *args, **kwargs):
-#         pk = kwargs.get('pk')
-#         print(pk)
-#         comment = get_object_or_404(Comment, pk=pk)
-#         print(comment)
-#         user = self.request.user
-#         if comment.user.filter(id=user.pk):
-#             print(comment.user.filter(id=user.pk))
-#             comment.user.remove(user.pk)
-#         else:
-#             comment.user.add(user)
-#         likes = len(comment.user.all())
-#         param = {'likes': likes}
-#
-#         return JsonResponse(param)
-#
+        pk=kwargs.get('pk')
+        album=get_object_or_404(Album,pk=pk)
+        user = self.request.user
+        if album.favorites.filter(id=user.pk):
+            album.favorites.remove(user.pk)
+        else:
+            album.favorites.add(user.pk)
+
+        param={'user':user.pk, 'pk': album.pk}
+
+
+        return JsonResponse(param)
