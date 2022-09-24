@@ -1,0 +1,142 @@
+[
+{
+  "model": "webapp.photo",
+  "pk": 4,
+  "fields": {
+    "img": "avatars/i.jpg",
+    "caption": "gdg",
+    "created_at": "2022-09-24T07:49:56.175Z",
+    "author": 1,
+    "is_public": true,
+    "album": [],
+    "favorites": [
+      2
+    ]
+  }
+},
+{
+  "model": "webapp.photo",
+  "pk": 5,
+  "fields": {
+    "img": "avatars/cat.jpg",
+    "caption": "sdfsdf",
+    "created_at": "2022-09-24T08:00:25.937Z",
+    "author": 1,
+    "is_public": true,
+    "album": [],
+    "favorites": [
+      2
+    ]
+  }
+},
+{
+  "model": "webapp.photo",
+  "pk": 6,
+  "fields": {
+    "img": "avatars/RyQQo6c.jpg",
+    "caption": "dfgd",
+    "created_at": "2022-09-24T08:03:46.937Z",
+    "author": 1,
+    "is_public": true,
+    "album": [
+      1
+    ],
+    "favorites": [
+      2
+    ]
+  }
+},
+{
+  "model": "webapp.photo",
+  "pk": 8,
+  "fields": {
+    "img": "avatars/Без_названия.jpg",
+    "caption": "aaaa",
+    "created_at": "2022-09-24T09:08:32.495Z",
+    "author": 1,
+    "is_public": true,
+    "album": [
+      1
+    ],
+    "favorites": [
+      2
+    ]
+  }
+},
+{
+  "model": "webapp.photo",
+  "pk": 9,
+  "fields": {
+    "img": "avatars/Без_названия_RYy79hi.jpg",
+    "caption": "личное",
+    "created_at": "2022-09-24T10:11:44.776Z",
+    "author": 1,
+    "is_public": false,
+    "album": [],
+    "favorites": []
+  }
+},
+{
+  "model": "webapp.photo",
+  "pk": 10,
+  "fields": {
+    "img": "avatars/Без_названия_1.jpg",
+    "caption": "testleo",
+    "created_at": "2022-09-24T11:10:25.329Z",
+    "author": 2,
+    "is_public": true,
+    "album": [],
+    "favorites": [
+      2
+    ]
+  }
+},
+{
+  "model": "webapp.album",
+  "pk": 1,
+  "fields": {
+    "name": "1",
+    "description": "!!!!",
+    "author": 1,
+    "created_at": "2022-09-24T09:01:21.321Z",
+    "is_public": true,
+    "favorites": []
+  }
+},
+{
+  "model": "webapp.album",
+  "pk": 2,
+  "fields": {
+    "name": "2",
+    "description": "2222",
+    "author": 1,
+    "created_at": "2022-09-24T09:34:21.149Z",
+    "is_public": true,
+    "favorites": []
+  }
+},
+{
+  "model": "webapp.album",
+  "pk": 3,
+  "fields": {
+    "name": "3",
+    "description": "2222",
+    "author": 1,
+    "created_at": "2022-09-24T09:34:44.403Z",
+    "is_public": true,
+    "favorites": []
+  }
+},
+{
+  "model": "webapp.album",
+  "pk": 4,
+  "fields": {
+    "name": "4",
+    "description": "222",
+    "author": 1,
+    "created_at": "2022-09-24T09:35:17.520Z",
+    "is_public": false,
+    "favorites": []
+  }
+}
+]
