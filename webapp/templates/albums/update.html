@@ -1,11 +1,11 @@
 {% extends "base.html" %}
-{% block title %}Изменение комментария{% endblock %}
+{% block title %}Изменение альбома{% endblock %}
 
 {% block content %}
-    <h1>Update Comment</h1>
+    <h1>Изменить альбом</h1>
     <form action="" method="post">
         {% include "partial/form.html" with button_text="Изменить" %}
     </form>
-    <a href="{% url "webapp:article_view" comment.article.pk %}">Назад</a>
+    <a href="{% url "webapp:AlbumView" album.pk %}">Назад</a>
     <a href="{% url "webapp:index" %}">На главную</a>
 {% endblock %}

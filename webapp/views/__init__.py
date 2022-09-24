@@ -1,3 +1,3 @@
-from .articles import *
-from .comments import *
+from .photo import *
+from .album import *
 from .base_view import *

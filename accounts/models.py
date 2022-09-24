@@ -7,7 +7,7 @@ from django.db import models
 
 class Profile(models.Model):
     birthday = models.DateField(null=True, blank=True, verbose_name="Дата рождения")
-    avatar = models.ImageField(upload_to="avatars", null=True, blank=True, verbose_name="Аватар")
+    avatar = models.ImageField(upload_to="uploads", null=True, blank=True, verbose_name="Аватар")
     user = models.OneToOneField(get_user_model(),
                                 on_delete=models.CASCADE,
                                 verbose_name="Пользователь",

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block nav %}
+    {% if request.user.is_authenticated %}
+        {% if perms.webapp.change_album or user == album.author %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url "webapp:UpdateAlbum" album.pk %}">Редактировать</a>
+            </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{% url "webapp:DeleteAlbum" album.pk %}">Удалить</a>
+        </li>
+            {% endif %}
+
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="card mt-3">
+        <div class="card-body text-center">
+{#            <img src="{{ photo.img.url }}" style="height: auto; width: auto">#}
+            <h5 class="card-title">{{ album.name }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">Автор: {{ album.author }}</h6>
+            <p class="card-text">Описание: {{ album.description }}</p>
+            <a href="{% url 'webapp:AddFavoriteAlbum' album.pk%}"> В избранное</a
+        </div>
+        <div style="display: flex">
+            {% for photo in album.photos.all %}
+                <div class="col-12 col-md-6 col-lg-4" >
+            <div class="card mb-3">
+                <img src="{{ photo.img.url }}" style="height: 300px;width: auto" >
+                <h5 class="card-title">{{ photo.upper }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">Автор: {{ photo.author }}</h6>
+            <p class="card-text">Подпись: {{ photo.caption }}</p>
+                <p class="card-text">Дата: {{ photo.created_at }}</p>
+                </div>
+                </div>
+            {% endfor %}
+
+        </div>
+
+
+
+        </div>
+
+    </div>
+
+
+
+
+
+
+{% endblock %}
