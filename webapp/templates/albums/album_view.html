@@ -21,7 +21,18 @@
             <h5 class="card-title">{{ album.name }}</h5>
             <h6 class="card-subtitle mb-2 text-muted">Автор: {{ album.author }}</h6>
             <p class="card-text">Описание: {{ album.description }}</p>
-            <a href="{% url 'webapp:AddFavoriteAlbum' album.pk%}"> В избранное</a
+{% if request.user in album.favorites.all %}
+                <button id="like{{ forloop.counter }}" class="btn_like" data-pk="{{ album.id }}"
+                        style="width: 100px; height: 75px; ">Из избранного
+                </button>
+
+{% endif %}
+       {% if request.user not in album.favorites.all %}
+                <button id="like{{ forloop.counter }}" class="btn_like" data-pk="{{ album.id }}"
+                        style="width: 100px; height: 75px; ">В избранное
+                </button>
+       {% endif %}
+
         </div>
         <div style="display: flex">
             {% for photo in album.photos.all %}
@@ -45,6 +56,36 @@
     </div>
 
 
+<script>
+
+        async function changeButton(id, event) {
+            console.log('target: ', event.target);
+            let pk = await event.target.dataset['pk'];
+            console.log(pk)
+
+            let response = await fetch(`http://localhost:8000/albums/${pk}/favorite   `)
+            let data = await response.json()
+            console.log(data)
+            let user = data['user']
+            console.log(user)
+
+            let button = await document.getElementById('like')
+
+
+            if (button.innerText === 'В избранное') {
+                button.innerText = 'Из избранного'
+            } else if (button.innerText === 'Из избранного') {
+                button.innerText = 'В избранное'
+            }
+
+        }
+
+
+        let button = document.getElementsByClassName('btn_like')
+        for (let i = 0; i < button.length; i++) {
+            button[i].addEventListener('click', () => changeButton(`like${(i + 1)}`, event))
+        }
+    </script>
 
 
 
